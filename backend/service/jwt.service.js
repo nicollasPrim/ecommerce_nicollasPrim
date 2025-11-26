@@ -1,19 +1,22 @@
 const jwt = require('jsonwebtoken')
-require('dotenv').config()  // carregar as variáveis de ambiente
-const SEGREDO = process.env.JWT_SECRET
-const tempo = process.env.JWT_EXPIRES_IN
+const path = require('path')
+require('dotenv').config({
+    path: path.join(__dirname, '../.env') // ajuste conforme onde está seu .env
+})
 
-function gerarToken(payload){
-    return jwt.sign(payload, SEGREDO, {expiresIn: tempo})
-}
+function gerarToken(payload) {
 
-function verificarToken(token){
-    try{
-        return jwt.verify(token, SEGREDO)
-    }catch(err){
-        console.error('Erro ao verificar o token!')
-        return null
+    if (!process.env.JWT_SECRET) {
+        throw new Error("JWT_SECRET não definido no .env!")
     }
+
+    if (!process.env.JWT_EXPIRES) {
+        throw new Error("JWT_EXPIRES não definido no .env!")
+    }
+
+    return jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES
+    })
 }
 
-module.exports = { gerarToken, verificarToken }
+module.exports = { gerarToken }
