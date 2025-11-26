@@ -1,6 +1,7 @@
 let btnLogin = document.getElementById('btnLogin')
+let res = document.getElementById('res') // <-- AGORA EXISTE
 
-btnLogin.addEventListener('click', (e)=>{
+btnLogin.addEventListener('click', (e) => {
     e.preventDefault()
 
     let email = document.getElementById('email').value
@@ -13,58 +14,43 @@ btnLogin.addEventListener('click', (e)=>{
         return
     }
 
-    const dados = {
-        email: email,
-        senha: senha
-    }
+    const dados = { email, senha }
 
     fetch('http://localhost:3000/login', {
         method: 'POST',
-        headers: {
-            'Content-Type':'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dados)
     })
     .then(resp => resp.json())
     .then(dados => {
+
+        // SE LOGIN FALHA
+        if (!dados.token || !dados.usuario) {
+            res.innerHTML = dados.mensagem || dados.message || 'Erro ao fazer login!'
+            res.style.color = 'red'
+            res.style.textAlign = 'center'
+            return
+        }
+
+        // SUCESSO
         alert('Login realizado com sucesso!')
-
         console.log(dados)
-            console.log('nome', dados.usuario.nome)
-            console.log('tipo', dados.usuario.tipo)
 
-            if (!dados.token) {
-                res.innerHTML = dados.message || 'Erro ao fazer login!'
-                res.style.color = 'red'
-                res.style.textAlign = 'center'
-                return
-            }
+        // SALVA DADOS
+        sessionStorage.setItem('token', dados.token)
+        sessionStorage.setItem('nome', dados.usuario.nome)
+        sessionStorage.setItem('tipo', dados.usuario.tipo)
 
-            // Salvar token 
-            sessionStorage.setItem('token', dados.token)
-            // Salvar nome
-            sessionStorage.setItem('nome', dados.usuario.nome)
-            sessionStorage.setItem('tipo', dados.usuario.tipo)
-
-            // res.innerHTML = `<br>`
-            // res.innerHTML += `<hr>`
-            // res.innerHTML += `<br>`
-            // res.innerHTML += `Login realizado com sucesso!`
-            // res.style.color = 'white'
-            // res.style.textAlign = 'center'
-            // res.style.fontWeight = 'bold'
-
-            setTimeout(() => {
-                // Redirecionar conforme tipo
-                if (dados.usuario.tipo === 'ADMIN') {
-                    location.href = './html/home.html'
-                } else {
-                    location.href = './pages/loja.html'
-                }
-            }, 1500)
+        // REDIRECIONA
+        if (dados.usuario.tipo === 'ADMIN') {
+            location.href = './html/home.html'
+        } else {
+            location.href = './pages/loja.html'
+        }
     })
-    .catch((err)=>{
-        console.error('Falha ao fazer login!',err)
-        alert('Falha ao fazer login!')
+    .catch(err => {
+        console.error('Falha ao fazer login!', err)
+        res.innerHTML = 'Erro ao conectar ao servidor!'
+        res.style.color = 'red'
     })
 })
