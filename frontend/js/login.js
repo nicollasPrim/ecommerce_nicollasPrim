@@ -26,6 +26,7 @@ btnLogin.addEventListener('click', (e) => {
 
         // SE LOGIN FALHA
         if (!dados.token || !dados.usuario) {
+            sessionStorage.clear()              // <-- limpando token corrompido
             res.innerHTML = dados.mensagem || dados.message || 'Erro ao fazer login!'
             res.style.color = 'red'
             res.style.textAlign = 'center'
@@ -39,10 +40,11 @@ btnLogin.addEventListener('click', (e) => {
         // SALVA DADOS
         sessionStorage.setItem('token', dados.token)
         sessionStorage.setItem('nome', dados.usuario.nome)
-        sessionStorage.setItem('tipo', dados.usuario.tipo)
+        sessionStorage.setItem('tipo_usuario', dados.usuario.tipo_usuario)
+
 
         // REDIRECIONA
-        if (dados.usuario.tipo === 'ADMIN') {
+        if (dados.usuario.tipo_usuario === 'ADMIN') {
             location.href = './html/home.html'
         } else {
             location.href = './html/loja.html'

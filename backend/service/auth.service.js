@@ -26,7 +26,7 @@ if (!senhaValida) {
 const token = gerarToken({
     id: usuario.codUsuario,
     email: usuario.email,
-    tipo: usuario.tipo_usuario
+    tipo_usuario: usuario.tipo_usuario
 })
 
 // -------- retorno ao controller --------
@@ -36,7 +36,7 @@ return {
         id: usuario.codUsuario,
         nome: usuario.nome,
         email: usuario.email,
-        tipo: usuario.tipo_usuario
+        tipo_usuario: usuario.tipo_usuario
     }
 }
 

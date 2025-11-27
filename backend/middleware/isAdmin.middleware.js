@@ -9,7 +9,7 @@ if (!req.user) {
     return res.status(401).json({ erro: "Usuário não autenticado!" })
 }
 
-if (!req.user.tipo || req.user.tipo.toUpperCase() !== 'ADMIN') {
+if (!req.user.tipo_usuario || req.user.tipo_usuario.toUpperCase() !== 'ADMIN') {
     console.log('[ADMIN MIDDLEWARE] - Usuário não é administrador!')
     return res.status(403).json({erro: "Acesso permitido somente para administradores!"})
 }

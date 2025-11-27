@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const path = require('path')
 require('dotenv').config({
-    path: path.join(__dirname, '../.env') // ajuste conforme onde está seu .env
+    path: path.join(__dirname, '../db/.env') // ajuste conforme onde está seu .env
 })
 
 function gerarToken(payload) {
@@ -17,6 +17,10 @@ function gerarToken(payload) {
     return jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES
     })
+
+    console.log("SECRET:", process.env.JWT_SECRET)
+    console.log("EXPIRES:", process.env.JWT_EXPIRES)
+
 }
 
 module.exports = { gerarToken }

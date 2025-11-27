@@ -16,15 +16,17 @@ btnCadProduto.addEventListener('click', (e) => {
     e.preventDefault()
 
     let nome = document.getElementById('nome').value
-    let descricao = document.getElementById('descricao').value
-    let modelo = document.getElementById('modelo').value
+    let nomeArtista = document.getElementById('nomeArtista').value
+    let genero = document.getElementById('genero').value
+    let tracklist = document.getElementById('tracklist').value
     let preco = document.getElementById('preco').value
     let imagem_url = document.getElementById('imagem_url').value
 
     const dados = {
         nome: nome,
-        descricao: descricao,
-        modelo: modelo,
+        nomeArtista: nomeArtista,
+        genero: genero,
+        tracklist: tracklist,
         preco: preco,
         imagem_url: imagem_url
     }
@@ -49,8 +51,8 @@ btnCadProduto.addEventListener('click', (e) => {
 
 // Recuperar nome e tipo de usuário
 let nome = sessionStorage.getItem('nome')
-let tipo = sessionStorage.getItem('tipo')
-console.log(nome, tipo)
+let tipo_usuario = sessionStorage.getItem('tipo_usuario')
+console.log(nome, tipo_usuario)
 
 // Escrever nome na tela
 if (nomeUsuario && nome) {

@@ -12,10 +12,10 @@ if (!token) {
     location.href = '../index.html'
 }
 
-// Recuperar nome e tipo de usuário
+// Recuperar nome e tipo_usuario de usuário
 let nome = sessionStorage.getItem('nome')
-let tipo = sessionStorage.getItem('tipo')
-console.log(nome,tipo)
+let tipo_usuario = sessionStorage.getItem('tipo_usuario')
+console.log(nome,tipo_usuario)
 
 // Escrever nome na tela
 if (nomeUsuario && nome) {
