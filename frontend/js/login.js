@@ -1,5 +1,5 @@
 let btnLogin = document.getElementById('btnLogin')
-let res = document.getElementById('res') // <-- AGORA EXISTE
+let res = document.getElementById('res') 
 
 btnLogin.addEventListener('click', (e) => {
     e.preventDefault()
@@ -45,7 +45,7 @@ btnLogin.addEventListener('click', (e) => {
         if (dados.usuario.tipo === 'ADMIN') {
             location.href = './html/home.html'
         } else {
-            location.href = './pages/loja.html'
+            location.href = './html/loja.html'
         }
     })
     .catch(err => {

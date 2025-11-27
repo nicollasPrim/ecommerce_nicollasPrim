@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundStore - Menu</title>
+    <link rel="stylesheet" href="../css/style.css"> <!-- seu css -->
+    <link rel="stylesheet" href="../css/menu.css">  <!-- complemento -->
+    <script src="../js/home.js"defer></script>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+    <div class="logo">
+        <img src="assets/logo.png" class="logo-img" alt="SoundStore">
+    </div>
+
+    <nav class="nav">
+        <a href="#" id="go-home">Início</a>
+        <a href="#" id="btn-carrinho">Carrinho</a>
+        <a href="#" id="btn-perfil">Meu Perfil</a>
+        <span>|</span>
+        <button id="btnLogout">Sair</button>
+    </nav>
+</header>
+
+<!-- ================= CONTEÚDO ================= -->
+<section class="hero2">
+    <h1>Recomendações para você</h1>
+    <p>Explore os melhores produtos de áudio selecionados especialmente para o seu estilo.</p>
+
+    <!-- Barra de pesquisa -->
+    <div class="search-box">
+        <input type="text" id="buscar" placeholder="Pesquisar produtos...">
+        <button id="btn-buscar" class="search-btn">Buscar</button>
+    </div>
+
+    <!-- Lista de produtos -->
+    <div id="lista-produtos" class="produto-container">
+        <!-- conteúdo inserido pelo JS -->
+    </div>
+</section>
+
+<footer class="footer">
+    SoundStore © 2025 — Áudio é a nossa paixão.
+</footer>
+</body>
+</html>
