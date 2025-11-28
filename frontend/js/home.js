@@ -14,8 +14,8 @@ if (!token) {
 
 // Recuperar nome e tipo_usuario de usuário
 let nome = sessionStorage.getItem('nome')
-let tipo_usuario = sessionStorage.getItem('tipo_usuario')
-console.log(nome,tipo_usuario)
+let tipo = sessionStorage.getItem('tipo_usuario')
+console.log(nome,tipo)
 
 // Escrever nome na tela
 if (nomeUsuario && nome) {

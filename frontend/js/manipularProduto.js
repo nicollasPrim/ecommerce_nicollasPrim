@@ -36,16 +36,18 @@ btnAtualizarProduto.addEventListener('click', (e) => {
 
     let codProduto = Number(document.getElementById(codProduto).value)
     let nome = document.getElementById('nome').value
-    let descricao = document.getElementById('descricao').value
-    let modelo = document.getElementById('modelo').value
+    let nomeArtista = document.getElementById('nomeArtista').value
+    let tracklist = document.getElementById('tracklist').value
+    let genero = document.getElementById('genero').value
     let preco = document.getElementById('preco').value
     let imagem_url = document.getElementById('imagem_url').value
 
     const dados = {
         codProduto: codProduto,
         nome: nome,
-        descricao: descricao,
-        modelo: modelo,
+        nomeArtista: nomeArtista,
+        genero: genero,
+        tracklist: tracklist,
         preco: preco,
         imagem_url: imagem_url
     }
@@ -95,10 +97,11 @@ function gerarTabela(dados) {
         <thead>
             <th>Código</th>
             <th>Nome</th>
-            <th>Descrição</th>
-            <th>Modelo</th>
+            <th>Nome do Artista</th>
+            <th>Genêro</th>
+            <th>Músicas</th>
             <th>Preço</th>
-            <th>Imagem (link)</th>
+            <th>Imagem</th>
         </thead>
     `
     tab += `<tbody>`
@@ -107,10 +110,11 @@ function gerarTabela(dados) {
             <tr>
                 <td>${dad.codProduto}</td>
                 <td>${dad.nome}</td>
-                <td>${dad.descricao}</td>
-                <td>${dad.modelo}</td>
+                <td>${dad.nomeArtista}</td>
+                <td>${dad.genero}</td>
+                <td style="width:290px; height:auto; border-radius:4px;">${dad.tracklist}</td>
                 <td>${dad.preco}</td>
-                <td>${dad.imagem_url}</td>
+                <td><img src="${dad.imagem_url}" alt="${dad.nome}" style="width:150px; height:auto; border-radius:4px;"></td>
             </tr>
         `
     })

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro - Administrador</title>
     <link rel="stylesheet" href="../css/style.css">
-    <script src="../js/cadastrarAdmin.js" defer></script>
+    <script src="../js/cadastrarUsuario.js" defer></script>
 </head>
 
 <body>
@@ -33,11 +33,11 @@
                 <input type="text" id="identidade" placeholder="RG (opcional)">
                 <input type="password" id="senha" placeholder="Crie uma senha" required>
                 <br><br>
-                <select id="tipo_usuario" disabled>
+                <select id="tipo_usuario" selected>
                     <option value="ADMIN" selected>Administrador (padrão)</option>
                 </select>
 
-                <button type="submit" id="btnCadAdmin">Cadastrar Administrador</button>
+                <button type="submit" id="btnCadUsuario">Cadastrar Administrador</button>
 
                 <p>Voltar para o <a href="../index.html">Login</a></p>
 
