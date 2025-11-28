@@ -1,44 +1,62 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Neon Disc Store</title>
+
+    <title>Neon Disc Store - Loja</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="./css/style.css">
-    <script src="./js/login.js" defer></script>
+    <link rel="stylesheet" href="./css/menu.css">
+
+    <!-- Ícones -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Script -->
+    <script src="./js/loja.js" defer></script>
 </head>
 
 <body>
+
+    <!-- ============================ HEADER ============================ -->
     <header class="header">
         <h1 class="logo">
-            <img src="./assets/logo_cpb.png" alt="Logo da Neon Disc Store" class="logo-img">
+            <img src="../assets/logo_cpb.png" alt="Logo" class="logo-img">
         </h1>
+
         <nav class="nav">
-            <a href="#login">Login</a>
-            <a href="./html/manipularProduto.html">Produtos</a>
-            <a href="#sobre">Sobre</a>
+            <a href="./html/login.html">Login</a>
+            <a href="#" id="adminLink" style="display: none;">Painel Admin</a>
+            <span id="userDisplay"></span>
         </nav>
     </header>
 
-    <section id="hero" class="hero">
-        <div class="login-box" id="login">
-            <h2>Entrar na Neon Disc</h2>
-            <form>
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="password" id="senha" placeholder="Senha" required>
-                <button type="submit" id="btnLogin">Acessar</button>
-                <p>Ainda não tem uma conta? <a href="./html/cadastrarCliente.html">Crie a sua</a></p>
-                <p>Ou cadastre-se como adm! <a href="./html/cadastrarAdmin.html">Aqui</a></p>
-            </form>
+    <!-- ============================ HERO ============================ -->
+    <section class="hero1">
+        <div class="hero2">
+            <h1>Bem-vindo à Neon Disc Store</h1>
+            <p>Seleção premium de discos, vinis e edições especiais.</p>
         </div>
     </section>
 
-    <div id="res"></div>
+    <!-- ============================ SEARCH ============================ -->
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Buscar produtos...">
+        <button id="searchBtn" class="search-btn">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
 
+    <!-- ============================ PRODUTOS ============================ -->
+    <section class="produto-container" id="productsGrid">
+        <!-- Produtos carregados via JS -->
+    </section>
+
+    <!-- ============================ FOOTER ============================ -->
     <footer class="footer">
         <p>© 2025 Neon Disc Store. Todos os direitos reservados.</p>
-        <p>Privacidade • Termos • Suporte</p>
     </footer>
+
 </body>
 </html>

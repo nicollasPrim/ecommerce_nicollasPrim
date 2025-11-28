@@ -18,7 +18,6 @@ router.post(
 // GET – Listar produtos (qualquer usuário logado)
 router.get(
 '/',
-authMiddleware,
 listar
 )
 
