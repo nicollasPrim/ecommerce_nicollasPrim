@@ -37,7 +37,7 @@ const Usuario = db.define('usuario',{
         type: DataTypes.ENUM('CLIENTE', 'ADMIN'),
         allowNull: false,
         defaultValue: 'CLIENTE'
-    }
+    }    
 },{
     timestamps: true, 
     tableName: 'usuarios'

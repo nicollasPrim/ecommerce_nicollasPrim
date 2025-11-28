@@ -4,6 +4,14 @@ require('dotenv').config({
     path: path.join(__dirname, '../db/.env') // ajuste conforme onde está seu .env
 })
 
+function verificarToken(token) {
+    if (!process.env.JWT_SECRET) {
+        throw new Error("JWT_SECRET não definido no .env!");
+    }
+
+    return jwt.verify(token, process.env.JWT_SECRET);
+}
+
 function gerarToken(payload) {
 
     if (!process.env.JWT_SECRET) {
@@ -23,4 +31,4 @@ function gerarToken(payload) {
 
 }
 
-module.exports = { gerarToken }
+module.exports = { gerarToken, verificarToken }
