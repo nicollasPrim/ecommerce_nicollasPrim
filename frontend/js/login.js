@@ -46,9 +46,9 @@ btnLogin.addEventListener('click', (e) => {
             setTimeout(() => {
                 // Redirecionar conforme tipo
                 if (dados.usuario.tipo_usuario === 'ADMIN') {
-                    location.href = './html/home.html'
+                    location.href = 'home.html'
                 } else {
-                    location.href = './html/loja.html'
+                    location.href = 'loja.html'
                 }
             }, 1500)
         })

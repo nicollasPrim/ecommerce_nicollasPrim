@@ -19,6 +19,12 @@ async function listarProdutos() {
     return produtos
 }
 
+async function buscarProdutoPorId(id) {
+    const produto = await Produto.findByPk(id)
+    return produto
+}
+
+
 async function atualizarProduto(id, dados) {
 
     const produto = await Produto.findByPk(id)
@@ -65,4 +71,4 @@ async function apagarProduto(id) {
 }
 
 
-module.exports = { criarProduto, listarProdutos, atualizarProduto, atualizarProdutoCompleto, apagarProduto }
+module.exports = { criarProduto, listarProdutos, atualizarProduto, atualizarProdutoCompleto, apagarProduto, buscarProdutoPorId }

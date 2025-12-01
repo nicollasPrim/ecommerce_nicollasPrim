@@ -3,47 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoundStore - Menu</title>
-    <link rel="stylesheet" href="../css/style.css"> <!-- seu css -->
-    <link rel="stylesheet" href="../css/menu.css">  <!-- complemento -->
-    <script src="../js/home.js"defer></script>
+
+    <title>Neon Disc Store - Loja</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/menu.css">
+
+    <!-- Ícones -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Script -->
+    <script src="../js/loja.js" defer></script>
 </head>
+
 <body>
 
-<!-- ================= HEADER ================= -->
-<header class="header">
-    <div class="logo">
-        <img src="assets/logo.png" class="logo-img" alt="SoundStore">
-    </div>
+    <!-- ============================ HEADER ============================ -->
+    <header class="header">
+        <h1 class="logo">
+            <img src="../assets/logo_cpb.png" alt="Logo" class="logo-img">
+        </h1>
 
-    <nav class="nav">
-        <a href="#" id="go-home">Início</a>
-        <a href="#" id="btn-carrinho">Carrinho</a>
-        <a href="#" id="btn-perfil">Meu Perfil</a>
-        <span>|</span>
-        <button id="btnLogout">Sair</button>
-    </nav>
-</header>
+        <a href="carrinho.html" class="cart-btn">
+            <i class="fa fa-shopping-cart"></i> Carrinho
+        </a>        
 
-<!-- ================= CONTEÚDO ================= -->
-<section class="hero2">
-    <h1>Recomendações para você</h1>
-    <p>Explore os melhores produtos de áudio selecionados especialmente para o seu estilo.</p>
+        <nav class="nav">
+            <a href="#" id="adminLink" style="display: none;">Painel Admin</a>
+            <span id="userDisplay"></span>
+        </nav>
+    </header>
 
-    <!-- Barra de pesquisa -->
+    <!-- ============================ HERO ============================ -->
+    <section class="hero1">
+        <div class="hero2">
+            <h1>Bem-vindo à Neon Disc Store</h1>
+            <p>Seleção premium de discos, vinis e edições especiais.</p>
+        </div>
+    </section>
+
+    <!-- ============================ SEARCH ============================ -->
     <div class="search-box">
-        <input type="text" id="buscar" placeholder="Pesquisar produtos...">
-        <button id="btn-buscar" class="search-btn">Buscar</button>
+        <input type="text" id="searchInput" placeholder="Buscar produtos...">
+        <button id="searchBtn" class="search-btn">
+            <i class="fas fa-search"></i>
+        </button>
     </div>
 
-    <!-- Lista de produtos -->
-    <div id="lista-produtos" class="produto-container">
-        <!-- conteúdo inserido pelo JS -->
-    </div>
-</section>
+    <!-- ============================ PRODUTOS ============================ -->
+    <section class="produto-container" id="productsGrid">
+        <!-- Produtos carregados via JS -->
+    </section>
 
-<footer class="footer">
-    SoundStore © 2025 — Áudio é a nossa paixão.
-</footer>
+    <!-- ============================ FOOTER ============================ -->
+    <footer class="footer">
+        <p>© 2025 Neon Disc Store. Todos os direitos reservados.</p>
+    </footer>
+
 </body>
 </html>

@@ -1,4 +1,4 @@
-const { criarProduto, listarProdutos, atualizarProduto, atualizarProdutoCompleto, apagarProduto } = require('../service/produto.service')
+const { criarProduto, listarProdutos, atualizarProduto, atualizarProdutoCompleto, apagarProduto, buscarProdutoPorId } = require('../service/produto.service')
 
 async function criar(req, res) {
     try {
@@ -28,6 +28,23 @@ async function listar(req, res) {
     }
 }
 
+async function buscarPorId(req, res) {
+    try {
+        const { id } = req.params
+        const produto = await buscarProdutoPorId(id)
+
+        if (!produto) {
+            return res.status(404).json({ message: "Produto não encontrado" })
+        }
+
+        return res.status(200).json(produto)
+
+    } catch (err) {
+        console.error("ERRO buscarPorId:", err)
+        return res.status(500).json({ message: err.message })
+    }
+}
+
 async function atualizar(req, res) {
     try {
         const { id } = req.params
@@ -48,9 +65,10 @@ async function atualizar(req, res) {
 
 }
 
+
 async function atualizarCompleto(req, res) {
     try {
-        const id = req.params
+        const { id } = req.params
         const dados = req.body
 
         const produtoAtualizado = await atualizarProdutoCompleto(id, dados)
@@ -69,7 +87,7 @@ async function atualizarCompleto(req, res) {
 
 async function apagar(req, res) {
     try {
-        const id = req.params
+        const { id } = req.params
 
         await apagarProduto(id)
 
@@ -84,4 +102,4 @@ async function apagar(req, res) {
     }
 }
 
-module.exports = { criar, listar, atualizar, atualizarCompleto, apagar }
+module.exports = { criar, listar, atualizar, buscarPorId, atualizarCompleto, apagar }

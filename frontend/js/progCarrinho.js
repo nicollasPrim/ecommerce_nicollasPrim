@@ -1,14 +1,13 @@
-// Referências aos elementos
+// Elementos da página
 const areaCarrinho = document.getElementById('area-carrinho')
 const totalTexto = document.getElementById('total')
 const btnLimpar = document.getElementById('btn-limpar')
 const btnFinalizar = document.getElementById('btn-finalizar')
 const btnVoltar = document.getElementById('btn-voltar')
 
-// Recupera os produtos do localStorage
+// Recupera os produtos armazenados no carrinho
 let produtos = JSON.parse(localStorage.getItem('produtos')) || []
 
-// Renderiza a tabela do carrinho
 function mostrarCarrinho() {
     if (produtos.length === 0) {
         areaCarrinho.innerHTML = '<p>Seu carrinho está vazio.</p>'
@@ -46,19 +45,19 @@ function mostrarCarrinho() {
 
     tabelaHTML += `</tbody></table>`
     areaCarrinho.innerHTML = tabelaHTML
+
     totalTexto.textContent = `Total: R$ ${total.toFixed(2)}`
 }
 
-// Finalizar compra — ENVIA PARA /pedido CORRETAMENTE
+// Finalizar compra
 btnFinalizar.addEventListener('click', () => {
     if (produtos.length === 0) {
         alert('Seu carrinho está vazio!')
         return
     }
 
-    // Prepara payload no formato dos models (Pedido + ItemPedido)
     const itens = produtos.map((p) => ({
-        idProduto: p.codProd,       // compatível com modelo Produto
+        idProduto: p.codProd,
         quantidade: p.qtde,
         precoUnitario: p.preco,
         valorTotalItem: p.qtde * p.preco
@@ -67,7 +66,7 @@ btnFinalizar.addEventListener('click', () => {
     const pedido = {
         itens,
         valorSubtotal: itens.reduce((acc, item) => acc + item.valorTotalItem, 0),
-        valorFrete: 0, // Ajuste depois
+        valorFrete: 0,
         valorTotal: itens.reduce((acc, item) => acc + item.valorTotalItem, 0),
     }
 
@@ -77,16 +76,15 @@ btnFinalizar.addEventListener('click', () => {
         body: JSON.stringify(pedido)
     })
     .then(res => res.json())
-    .then(dados => {
-        console.log('Pedido criado:', dados)
+    .then(data => {
         alert('Compra finalizada com sucesso!')
         localStorage.removeItem('produtos')
         produtos = []
         mostrarCarrinho()
     })
     .catch(err => {
-        console.error('Erro ao enviar dados:', err)
-        alert('Erro ao enviar dados ao servidor.')
+        console.error('Erro ao enviar pedido:', err)
+        alert('Erro ao enviar os dados ao servidor.')
     })
 })
 
@@ -97,9 +95,9 @@ btnLimpar.addEventListener('click', () => {
     localStorage.removeItem('produtos')
 })
 
-// Voltar à loja
+// Voltar
 btnVoltar.addEventListener('click', () => {
-    location.href = 'index.html'
+    window.location.href = 'index.html'
 })
 
 mostrarCarrinho()
