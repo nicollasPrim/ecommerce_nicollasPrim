@@ -126,8 +126,8 @@ Copiar código
 ```bash
 cd backend
 npm install
+
 2. Crie o arquivo .env
-ini
 Copiar código
 DB_NAME=db_ecom
 DB_USER=root
@@ -136,11 +136,11 @@ DB_HOST=localhost
 DB_PORT=3306
 
 JWT_SECRET=sua_chave_secreta
-JWT_EXPIRES_IN=3h
+JWT_EXPIRES=3h
 BCRYPT_SALT_ROUNDS=10
 
 PORT=3000
-NODE_ENV=development
+
 3. Sincronize o banco de dados
 bash
 Copiar código
