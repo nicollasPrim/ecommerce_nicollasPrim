@@ -1,147 +1,134 @@
-🎵 Neon Disc Store — E-commerce de CDs, Vinis e Edições Especiais
+# 🎵 Neon Disc Store — E-commerce de CDs, Vinis e Edições Especiais
 
-A Neon Disc Store é uma plataforma completa de e-commerce desenvolvida para venda de discos, CDs, vinis e colecionáveis musicais, combinando uma estética moderna com uma identidade visual inspirada na internet dos anos 2000.
+A **Neon Disc Store** é uma plataforma completa de e-commerce desenvolvida para venda de **discos, vinis e colecionáveis musicais**, combinando um tema moderno com uma estética inspirada nos anos 2000.
 
-O projeto é dividido em Frontend + Backend, inclui sistema de autenticação, carrinho, catálogo, área do cliente e um painel administrativo onde é possível cadastrar, editar e gerenciar produtos.
+O sistema possui **cliente + admin**, incluindo catálogo, carrinho, autenticação, gerenciamento de CDs, controle de estoque e painel administrativo.
 
-🚀 Tecnologias Utilizadas
-Frontend
+---
 
-HTML5 + CSS3 (tema dark Y2K neon)
+## 🚀 Tecnologias Utilizadas
 
-JavaScript Vanilla
+### **Frontend**
+- HTML5 + CSS3 (tema dark Y2K neon)
+- JavaScript Vanilla
+- Fetch API
+- LocalStorage para carrinho
+- Layout responsivo e modular
 
-Fetch API para comunicação com o backend
+### **Backend**
+- Node.js + Express
+- Sequelize ORM
+- MySQL
+- JWT (autenticação segura)
+- Bcrypt (hash de senhas)
+- Arquitetura MVC
 
-LocalStorage para carrinho
+---
 
-Layout modular com componentes reutilizáveis
+## 📀 Funcionalidades
 
-Backend
+### 👤 **Usuário**
+- Cadastro e login com validação
+- Autenticação via JWT (Bearer Token)
+- Exibição dinâmica do usuário no menu
+- Acesso ao carrinho e páginas autenticadas
 
-Node.js + Express
+---
 
-Sequelize ORM
+### 🛒 **Loja (Cliente)**
+- Página inicial estilizada com tema neon/Y2K  
+- Busca de produtos
+- Catálogo dinâmico de discos
+- Cards interativos
+- Adicionar produtos ao carrinho
+- Carrinho salvo no LocalStorage
+- Cálculo automático de subtotal e total
 
-MySQL
+---
 
-JWT para autenticação via Bearer Token
+### 🛠️ **Painel Administrativo**
+Arquivo: `home.html`
 
-Bcrypt para hashing seguro
+- Cadastrar novos CDs  
+- Editar e atualizar produtos  
+- Gerenciar catálogo completo  
+- Ajustar preços, capas e tracklists  
+- Controle de estoque (relação 1:1 entre produto e estoque)
 
-Arquitetura MVC
+---
 
-📀 Funcionalidades Principais
-👤 Usuários
+### 📦 **Pedidos & Entrega**
+- Criação de pedido com múltiplos itens  
+- Associação ao usuário autenticado  
+- Cálculo de subtotal, total e frete  
+- Endereço automático via **API ViaCEP**  
+- Status de entrega (em trânsito, entregue, extraviado, etc.)  
 
-Cadastro e login com validação
+---
 
-Autenticação JWT com persistência
+## 🔐 Segurança
 
-Perfil do usuário (edição futura)
+Rotas protegidas utilizam **Bearer Token** (JWT).  
+Sem token → acesso negado.
 
-Proteção de rotas privadas
+Rotas seguras incluem:
 
-Exibição dinâmica do nome do usuário no menu
-
-🛒 Loja (Cliente)
-
-Página inicial estilizada com banner Y2K
-
-Busca de produtos por nome
-
-Listagem dinâmica de CDs/vinis
-
-Adicionar itens ao carrinho
-
-Carrinho persistente no LocalStorage
-
-Resumo do pedido com subtotal, frete e total
-
-Finalização da compra integrada ao backend
-
-Interface totalmente adaptada ao estilo Neon Disc Store
-
-🛠️ Painel Administrativo
-
-A página home.html oferece um dashboard elegante inspirado em portais de CMS dos anos 2000.
-
-Recursos:
-
-Cadastrar CDs (nome, artista, tracklist, preço, capa, gênero etc.)
-
-Editar e atualizar produtos existentes
-
-Gerenciar catálogo completo
-
-Controle de estoque (1:1 com produtos)
-
-Autenticação obrigatória para acessar o painel
-
-📦 Pedidos & Entrega
-
-Criação de pedidos com itens (1:N)
-
-Cálculo de subtotal, total e frete
-
-Armazenamento de dados do cliente
-
-Endereço preenchido automaticamente via API ViaCEP
-
-Status progressivo de entrega (em trânsito, entregue etc.)
-
-🔐 Segurança
-
-O backend utiliza:
-
-✔ Token JWT em rotas protegidas
-✔ Hash seguro de senhas com Bcrypt
-✔ Middleware para validação de token
-✔ Controle de acesso para administrador
-
-Rotas como:
-
-/pedido
 /usuario/me
+/pedido
 /entrega
 /produto/cadastrar
+/produto/alterar
 
+yaml
+Copiar código
 
-exigem autenticação válida.
+Senhas são armazenadas via **bcrypt** com salt.
 
-📂 Estrutura do Projeto
-/ecommerce_nicollasPrim
+---
+
+## 📂 Estrutura do Projeto
+
+ecommerce_nicollasPrim/
 │
 ├── backend/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── utils/
-│   ├── index.js
-│   ├── db/
-│   └── sync.js
+│ ├── controllers/
+│ ├── middleware/
+│ ├── models/
+│ ├── routes/
+│ ├── utils/
+│ ├── db/
+│ ├── index.js
+│ └── sync.js
 │
 ├── frontend/
-│   ├── html/
-│   │   ├── login.html
-│   │   ├── carrinho.html
-│   │   ├── home.html   (painel admin)
-│   │   ├── cadastrarProduto.html
-│   │   └── manipuladorProduto.html
-│   ├── css/
-│   │   ├── style.css   (tema principal)
-│   │   ├── menu.css
-│   │   └── páginas específicas
-│   ├── js/
-│   └── index.html      (loja inicial)
+│ ├── css/
+│ ├── js/
+│ ├── assets/
+│ ├── html/
+│ │ ├── login.html
+│ │ ├── carrinho.html
+│ │ ├── cadastrarProduto.html
+│ │ ├── manipularProduto.html
+│ │ └── home.html (Painel Admin)
+│ └── index.html (Página da loja)
+│
+└── README.md
 
-📌 Como Rodar o Backend
-1. Instale dependências
+yaml
+Copiar código
+
+---
+
+## 📌 Como Executar o Backend
+
+### 1. Instale as dependências
+
+```bash
 cd backend
 npm install
-
-2. Configure o arquivo .env
+2. Crie o arquivo .env
+ini
+Copiar código
 DB_NAME=db_ecom
 DB_USER=root
 DB_PASS=sua_senha
@@ -149,13 +136,29 @@ DB_HOST=localhost
 DB_PORT=3306
 
 JWT_SECRET=sua_chave_secreta
-JWT_EXPIRES=3h
+JWT_EXPIRES_IN=3h
 BCRYPT_SALT_ROUNDS=10
 
 PORT=3000
-
-3. Sincronize as tabelas
+NODE_ENV=development
+3. Sincronize o banco de dados
+bash
+Copiar código
 node sync.js
-
 4. Inicie o servidor
+bash
+Copiar código
 node index.js
+🌐 Rodando o Frontend
+Basta abrir:
+
+bash
+Copiar código
+frontend/index.html
+Ou utilizar um servidor local (Live Server recomendado).
+
+O frontend já está configurado para consumir:
+
+arduino
+Copiar código
+http://localhost:3000
