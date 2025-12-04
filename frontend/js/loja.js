@@ -48,21 +48,35 @@ carregarProdutos();
 function adicionarAoCarrinho(codProduto) {
     if (!token) {
         alert("Faça login para adicionar ao carrinho!");
-        location.href = "./html/login.html"; // AJUSTADO
+        location.href = "login.html";
         return;
     }
 
-    fetch("http://localhost:3000/carrinho", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({ codProduto })
-    })
-    .then(r => r.json())
-    .then(() => alert("Produto adicionado ao carrinho!"))
-    .catch(err => console.error("Erro:", err));
+    fetch(`http://localhost:3000/produto/${codProduto}`)
+        .then(res => res.json())
+        .then(prod => {
+            let carrinho = JSON.parse(localStorage.getItem("produtos")) || [];
+
+            const index = carrinho.findIndex(p => p.codProd === prod.codProduto);
+
+            if (index !== -1) {
+                carrinho[index].qtde++;
+            } else {
+                carrinho.push({
+                    codProd: prod.codProduto,
+                    nome: prod.nome,
+                    artista: prod.nomeArtista,
+                    preco: Number(prod.preco),
+                    imagem: prod.imagem_url,
+                    qtde: 1
+                });
+            }
+
+            localStorage.setItem("produtos", JSON.stringify(carrinho));
+
+            alert("Produto adicionado ao carrinho!");
+        })
+        .catch(err => console.error("Erro ao adicionar ao carrinho:", err));
 }
 
 // ===================== BUSCA =====================
