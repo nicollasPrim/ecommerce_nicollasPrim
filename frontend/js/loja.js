@@ -49,6 +49,7 @@ carregarProdutos();
 function adicionarAoCarrinho(codProduto) {
     if (!usuario) {
         alert("Faça login para adicionar ao carrinho!");
+<<<<<<< HEAD
         window.location.href = "login.html";
         return;
     }
@@ -63,20 +64,49 @@ function adicionarAoCarrinho(codProduto) {
 
             if (existente) {
                 existente.qtde++;
+=======
+        location.href = "login.html";
+        return;
+    }
+
+    fetch(`http://localhost:3000/produto/${codProduto}`)
+        .then(res => res.json())
+        .then(prod => {
+            let carrinho = JSON.parse(localStorage.getItem("produtos")) || [];
+
+            const index = carrinho.findIndex(p => p.codProd === prod.codProduto);
+
+            if (index !== -1) {
+                carrinho[index].qtde++;
+>>>>>>> 2a604adf7e645607bb4dc94370f818f832bdbd6e
             } else {
                 carrinho.push({
                     codProd: prod.codProduto,
                     nome: prod.nome,
+<<<<<<< HEAD
                     preco: Number(prod.preco),
+=======
+                    artista: prod.nomeArtista,
+                    preco: Number(prod.preco),
+                    imagem: prod.imagem_url,
+>>>>>>> 2a604adf7e645607bb4dc94370f818f832bdbd6e
                     qtde: 1
                 });
             }
 
+<<<<<<< HEAD
             localStorage.setItem("carrinho", JSON.stringify(carrinho));
 
             alert("Produto adicionado ao carrinho!");
         })
         .catch(err => console.error("Erro:", err));
+=======
+            localStorage.setItem("produtos", JSON.stringify(carrinho));
+
+            alert("Produto adicionado ao carrinho!");
+        })
+        .catch(err => console.error("Erro ao adicionar ao carrinho:", err));
+>>>>>>> 2a604adf7e645607bb4dc94370f818f832bdbd6e
 }
 
 // ===================== BUSCA =====================
