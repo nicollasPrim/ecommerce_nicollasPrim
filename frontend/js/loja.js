@@ -6,11 +6,12 @@ const token = sessionStorage.getItem("token");
 const userDisplay = document.getElementById("userDisplay");
 const adminLink = document.getElementById("adminLink");
 
-// Mostrar nome
 if (nome) userDisplay.innerHTML = `Olá, ${nome}`;
-
-// Mostrar botão Admin
 if (tipo === "ADMIN") adminLink.style.display = "inline-block";
+
+// ===================== PEGAR USUÁRIO LOGADO (AQUI!!!) =====================
+const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+console.log("UsuarioLogado:", usuario);
 
 // ===================== PRODUTOS =====================
 const grid = document.getElementById("productsGrid");
@@ -46,23 +47,36 @@ carregarProdutos();
 
 // ===================== ADICIONAR AO CARRINHO =====================
 function adicionarAoCarrinho(codProduto) {
-    if (!token) {
+    if (!usuario) {
         alert("Faça login para adicionar ao carrinho!");
-        location.href = "./html/login.html"; // AJUSTADO
+        window.location.href = "login.html";
         return;
     }
 
-    fetch("http://localhost:3000/carrinho", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({ codProduto })
-    })
-    .then(r => r.json())
-    .then(() => alert("Produto adicionado ao carrinho!"))
-    .catch(err => console.error("Erro:", err));
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    fetch(`http://localhost:3000/produto/${codProduto}`)
+        .then(r => r.json())
+        .then(prod => {
+
+            const existente = carrinho.find(p => p.codProd === prod.codProduto);
+
+            if (existente) {
+                existente.qtde++;
+            } else {
+                carrinho.push({
+                    codProd: prod.codProduto,
+                    nome: prod.nome,
+                    preco: Number(prod.preco),
+                    qtde: 1
+                });
+            }
+
+            localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+            alert("Produto adicionado ao carrinho!");
+        })
+        .catch(err => console.error("Erro:", err));
 }
 
 // ===================== BUSCA =====================

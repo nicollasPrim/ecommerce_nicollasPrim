@@ -1,103 +1,188 @@
-// Elementos da página
-const areaCarrinho = document.getElementById('area-carrinho')
-const totalTexto = document.getElementById('total')
-const btnLimpar = document.getElementById('btn-limpar')
-const btnFinalizar = document.getElementById('btn-finalizar')
-const btnVoltar = document.getElementById('btn-voltar')
+// =========================
+// PEGAR USUÁRIO LOGADO
+// =========================
+const userDisplay = document.getElementById("userDisplay");
+const usuario = JSON.parse(localStorage.getItem("usuarioLogado")); 
+const token = sessionStorage.getItem("token"); 
+const idUsuario = sessionStorage.getItem("idUsuario");
 
-// Recupera os produtos armazenados no carrinho
-let produtos = JSON.parse(localStorage.getItem('produtos')) || []
+if (usuario) userDisplay.textContent = usuario.nome;
 
-function mostrarCarrinho() {
-    if (produtos.length === 0) {
-        areaCarrinho.innerHTML = '<p>Seu carrinho está vazio.</p>'
-        totalTexto.textContent = 'Total: R$ 0,00'
-        return
+
+// =========================
+// CARRINHO
+// =========================
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+const areaCarrinho = document.getElementById("area-carrinho");
+const totalEl = document.getElementById("total");
+
+// Renderiza o carrinho na tela
+function renderCarrinho() {
+    areaCarrinho.innerHTML = "";
+
+    if (carrinho.length === 0) {
+        areaCarrinho.innerHTML = "<p>Seu carrinho está vazio.</p>";
+        totalEl.textContent = "Total: R$ 0,00";
+        return;
     }
 
-    let total = 0
-    let tabelaHTML = `
-        <table>
-            <thead>
-                <tr>
-                    <th>Produto</th>
-                    <th>Preço (R$)</th>
-                    <th>Qtde</th>
-                    <th>Subtotal (R$)</th>
-                </tr>
-            </thead>
-            <tbody>
-    `
+    let total = 0;
 
-    produtos.forEach(p => {
-        const subtotal = p.preco * p.qtde
-        total += subtotal
+    carrinho.forEach((item, index) => {
+        const subtotal = item.preco * item.qtde;
+        total += subtotal;
 
-        tabelaHTML += `
-            <tr>
-                <td>${p.nome}</td>
-                <td>${p.preco.toFixed(2)}</td>
-                <td>${p.qtde}</td>
-                <td>${subtotal.toFixed(2)}</td>
-            </tr>
-        `
-    })
+        const div = document.createElement("div");
+        div.classList.add("cart-item");
 
-    tabelaHTML += `</tbody></table>`
-    areaCarrinho.innerHTML = tabelaHTML
+        div.innerHTML = `
+            <div class="cart-info">
+                <p><strong>${item.nome}</strong></p>
+                <p>Preço: R$ ${item.preco.toFixed(2)}</p>
+                <p>Quantidade: ${item.qtde}</p>
+                <p><strong>Subtotal: R$ ${subtotal.toFixed(2)}</strong></p>
+            </div>
 
-    totalTexto.textContent = `Total: R$ ${total.toFixed(2)}`
+            <button class="btn-remove" data-index="${index}">
+                <i class="fa fa-trash"></i> Remover
+            </button>
+        `;
+        areaCarrinho.appendChild(div);
+    });
+
+    totalEl.textContent = `Total: R$ ${total.toFixed(2)}`;
 }
 
-// Finalizar compra
-btnFinalizar.addEventListener('click', () => {
-    if (produtos.length === 0) {
-        alert('Seu carrinho está vazio!')
-        return
+
+// Remover item individual
+document.addEventListener("click", function (e) {
+    if (e.target.closest(".btn-remove")) {
+        const index = e.target.closest(".btn-remove").dataset.index;
+        carrinho.splice(index, 1);
+        localStorage.setItem("carrinho", JSON.stringify(carrinho));
+        renderCarrinho();
     }
+});
 
-    const itens = produtos.map((p) => ({
-        idProduto: p.codProd,
-        quantidade: p.qtde,
-        precoUnitario: p.preco,
-        valorTotalItem: p.qtde * p.preco
-    }))
-
-    const pedido = {
-        itens,
-        valorSubtotal: itens.reduce((acc, item) => acc + item.valorTotalItem, 0),
-        valorFrete: 0,
-        valorTotal: itens.reduce((acc, item) => acc + item.valorTotalItem, 0),
-    }
-
-    fetch('http://localhost:3000/pedido', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(pedido)
-    })
-    .then(res => res.json())
-    .then(data => {
-        alert('Compra finalizada com sucesso!')
-        localStorage.removeItem('produtos')
-        produtos = []
-        mostrarCarrinho()
-    })
-    .catch(err => {
-        console.error('Erro ao enviar pedido:', err)
-        alert('Erro ao enviar os dados ao servidor.')
-    })
-})
 
 // Limpar carrinho
-btnLimpar.addEventListener('click', () => {
-    areaCarrinho.innerHTML = '<p>Seu carrinho está vazio.</p>'
-    totalTexto.textContent = 'Total: R$ 0,00'
-    localStorage.removeItem('produtos')
-})
+document.getElementById("btn-limpar").addEventListener("click", () => {
+    carrinho = [];
+    localStorage.setItem("carrinho", "[]");
+    renderCarrinho();
+});
+
+
+// =========================
+// VIACEP
+// =========================
+document.getElementById("cep").addEventListener("blur", async function () {
+    const cep = this.value.replace(/\D/g, "");
+
+    if (cep.length !== 8) return;
+
+    const url = `https://viacep.com.br/ws/${cep}/json/`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.erro) return;
+
+    document.getElementById("rua").value = data.logradouro;
+    document.getElementById("bairro").value = data.bairro;
+    document.getElementById("cidade").value = data.localidade;
+    document.getElementById("estado").value = data.uf;
+});
+
+
+// =========================
+// FINALIZAR COMPRA
+// =========================
+document.getElementById("btn-finalizar").addEventListener("click", async () => {
+
+    if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio.");
+        return;
+    }
+
+    if (!token) {
+        alert("Você precisa estar logado para finalizar a compra.");
+        return;
+    }
+
+    // validar endereço
+    const camposObrigatorios = ["cep", "rua", "bairro", "cidade", "estado", "numero"];
+
+    for (let campo of camposObrigatorios) {
+        if (document.getElementById(campo).value.trim() === "") {
+            alert("Preencha todos os campos obrigatórios de endereço.");
+            return;
+        }
+    }
+
+    const endereco = {
+        cep: document.getElementById("cep").value,
+        logradouro: document.getElementById("rua").value,
+        bairro: document.getElementById("bairro").value,
+        localidade: document.getElementById("cidade").value,
+        uf: document.getElementById("estado").value,
+        numero: document.getElementById("numero").value,
+        complemento: document.getElementById("complemento").value
+    };
+
+    let subtotal = carrinho.reduce((acc, item) => acc + (item.preco * item.qtde), 0);
+    let frete = 15;
+    let valorTotal = subtotal + frete;
+
+    const pedido = {
+        idUsuario: idUsuario,
+        valorSubtotal: subtotal,
+        valorFrete: frete,
+        valorTotal: valorTotal,
+        itens: carrinho.map(item => ({
+            idProduto: item.codProd,
+            quantidade: item.qtde,
+            precoUnitario: item.preco,
+            valorTotalItem: item.preco * item.qtde
+        })),
+        entrega: endereco
+    };
+
+    try {
+        const response = await fetch("http://localhost:3000/pedido/criar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(pedido)
+        });
+
+        const data = await response.json();
+
+        if (data.sucesso) {
+            alert("Compra finalizada com sucesso!");
+            localStorage.setItem("carrinho", "[]");
+            window.location.href = "index.html";
+        } else {
+            console.log(data);
+            alert("Erro ao criar pedido.");
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Erro ao enviar pedido para o servidor.");
+    }
+
+});
+
 
 // Voltar
-btnVoltar.addEventListener('click', () => {
-    window.location.href = 'index.html'
-})
+document.getElementById("btn-voltar").addEventListener("click", () => {
+    history.back();
+});
 
-mostrarCarrinho()
+
+// Renderizar no início
+renderCarrinho();

@@ -1,21 +1,16 @@
-let btnLogin = document.getElementById('btnLogin')
+let btnLogin = document.getElementById('btnLogin');
 
 btnLogin.addEventListener('click', (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    let email = document.getElementById('email').value
-    let senha = document.getElementById('senha').value
+    let email = document.getElementById('email').value;
+    let senha = document.getElementById('senha').value;
 
-    const dados = {
-        email: email,
-        senha: senha
-    }
+    const dados = { email, senha };
 
     fetch('http://localhost:3000/login', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dados)
     })
         .then(resp => resp.json().then(body => {
@@ -23,37 +18,38 @@ btnLogin.addEventListener('click', (e) => {
             return body;
         }))
         .then(dados => {
-            alert(dados.message)
 
-            console.log(dados)
-            console.log('nome', dados.usuario.nome)
-            console.log('tipo_usuario', dados.usuario.tipo_usuario)
+            alert(dados.message);
 
             if (!dados.token) {
-                res.innerHTML = dados.message || 'Erro ao fazer login!'
-                res.style.color = 'red'
-                res.style.textAlign = 'center'
-                return
+                alert('Erro ao fazer login!');
+                return;
             }
 
-            // Salvar token 
-            sessionStorage.setItem('token', dados.token)
-            // Salvar nome
-            sessionStorage.setItem('nome', dados.usuario.nome)
-            sessionStorage.setItem('tipo_usuario', dados.usuario.tipo_usuario)
+            // ==============================
+            // SALVANDO CORRETAMENTE OS DADOS
+            // ==============================
+            sessionStorage.setItem('token', dados.token);
+            sessionStorage.setItem('nome', dados.usuario.nome);
+            sessionStorage.setItem('tipo_usuario', dados.usuario.tipo_usuario);
 
-            
+            // salvar o id real do usuário
+            sessionStorage.setItem("idUsuario", dados.usuario.codUsuario);
+
+            // também salva no localStorage caso queira usar depois
+            localStorage.setItem("usuarioLogado", JSON.stringify(dados.usuario));
+
+            // Redirecionar
             setTimeout(() => {
-                // Redirecionar conforme tipo
                 if (dados.usuario.tipo_usuario === 'ADMIN') {
-                    location.href = 'home.html'
+                    location.href = 'home.html';
                 } else {
-                    location.href = 'loja.html'
+                    location.href = 'loja.html';
                 }
-            }, 1500)
+            }, 1500);
         })
         .catch((err) => {
-            console.error('Falha ao fazer login!', err)
-            alert(err.message)
-        })
-})
+            console.error('Falha ao fazer login!', err);
+            alert(err.message);
+        });
+});

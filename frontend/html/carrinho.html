@@ -6,33 +6,62 @@
 
     <title>Carrinho - Neon Disc Store</title>
 
+    <!-- CSS -->
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/menu.css">
-    <script src="../js/progCarrinho.js" defer></script>
 
+    <!-- Ícones -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- JS -->
+    <script src="../js/progCarrinho.js" defer></script>
 </head>
 
 <body>
 
 <header class="header">
-    <h1 class="logo">
-        <img src="../assets/logo_cpb.png" alt="Logo" class="logo-img">
-    </h1>
 
     <nav class="nav">
-        <a href="index.html">Voltar para a loja</a>
-        <a href="#" id="adminLink" style="display: none;">Painel Admin</a>
+        <a href="loja.html">Voltar para a loja</a>
         <span id="userDisplay"></span>
     </nav>
 </header>
 
 <section class="carrinho-container">
+
     <h2>Seu Carrinho</h2>
 
+    <!-- área dos produtos -->
     <div id="area-carrinho"></div>
 
+    <!-- total -->
     <h3 id="total">Total: R$ 0,00</h3>
+
+    <!-- endereço -->
+    <div class="endereco-box">
+        <h3>Endereço de Entrega</h3>
+
+        <label>CEP:</label>
+        <input type="text" id="cep" placeholder="00000-000" maxlength="9">
+
+        <label>Rua:</label>
+        <input type="text" id="rua">
+
+        <label>Bairro:</label>
+        <input type="text" id="bairro">
+
+        <label>Cidade:</label>
+        <input type="text" id="cidade">
+
+        <label>Estado:</label>
+        <input type="text" id="estado">
+
+        <label>Número:</label>
+        <input type="text" id="numero">
+
+        <label>Complemento:</label>
+        <input type="text" id="complemento">
+    </div>
 
     <div class="carrinho-actions">
         <button id="btn-limpar" class="btn-danger">Limpar Carrinho</button>

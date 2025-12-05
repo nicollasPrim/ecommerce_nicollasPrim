@@ -47,7 +47,7 @@ body {
     background: rgba(20, 20, 20, 0.9);
     backdrop-filter: blur(6px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-    position: fixed;
+    /* // position: fixed; */
     top: 0;
     width: 100%;
     z-index: 10;
@@ -249,4 +249,112 @@ tr:hover {
     font-size: 17px;
     color: #ccc;
     border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.carrinho-container {
+    padding-top: 140px;   /* evita que o header tampe */
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
+    background: var(--gray-800);
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 18px rgba(0,0,0,0.4);
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--gray-700);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 16px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+.cart-info p {
+    margin: 4px 0;
+}
+
+.carrinho-actions {
+    margin-top: 25px;
+    display: flex;
+    gap: 12px;
+}
+
+.carrinho-actions button {
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+}
+
+/* Remover item */
+.btn-remove {
+    background: #a11;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-remove:hover {
+    background: #cc1a1a;
+}
+
+/* Limpar */
+.btn-danger {
+    background: #b31818;
+    color: white;
+}
+.btn-danger:hover {
+    background: #e32222;
+}
+
+/* Finalizar compra */
+.btn-success {
+    background: #2e9e3e;
+    color: white;
+}
+.btn-success:hover {
+    background: #38c24b;
+}
+
+/* voltar */
+.btn-default {
+    background: #444;
+    color: white;
+}
+.btn-default:hover {
+    background: #555;
+}
+
+.endereco-box {
+    margin-top: 30px;
+    padding: 20px;
+    background: var(--gray-700);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.07);
+}
+
+.endereco-box label {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.endereco-box input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: white;
 }
